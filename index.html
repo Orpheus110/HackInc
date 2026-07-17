@@ -1,5 +1,40 @@
 <!DOCTYPE html>
 <html>
+<form id="signupForm">
+
+<input
+type="text"
+id="name"
+placeholder="Name"
+required>
+
+<input
+type="email"
+id="email"
+placeholder="Email"
+required>
+
+<input
+type="text"
+id="college"
+placeholder="College"
+required>
+
+<select id="role">
+
+<option>Participant</option>
+
+<option>Organizer</option>
+
+</select>
+
+<button>
+
+Join Waitlist
+
+</button>
+
+</form>
 <head>
 <style>
 /* ═══════════════════════════════════════════════════════
@@ -1841,6 +1876,7 @@ strong {
 
 (function () {
   'use strict';
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyrLFuTR8EyIoePGnAXzwq-o395LAEFQx7ftE49Fev3YyH8uuR5SQ18wMRmtsBV742TpQ/exec";
 
   // ── Utility: Sanitize user input ─────────────────
   function sanitize(str) {
@@ -2036,7 +2072,7 @@ strong {
     form.querySelectorAll('.input-error').forEach(el => el.classList.remove('input-error'));
   }
 
-  eaForm.addEventListener('submit', (e) => {
+    eaForm.addEventListener('submit', async (e) => { 
     e.preventDefault();
     clearErrors(eaForm);
 
@@ -2073,15 +2109,21 @@ strong {
 
     // Collect and sanitize data
     const data = {
-      name: sanitize(name.value.trim()),
-      email: sanitize(email.value.trim()),
-      role: roleChecked.value,
-      profile_url: sanitize(document.getElementById('ea-profile').value.trim()),
-      consent: true
-    };
+  name: sanitize(name.value.trim()),
+  email: sanitize(email.value.trim()),
+  role: roleChecked.value,
+  profile_url: sanitize(document.getElementById('ea-profile').value.trim()),
+  consent: true
+};
 
-    StorageService.save('early_access', data);
+const result = await StorageService.save('early_access', data);
 
+if (result.success) {
+  eaFormState.style.display = 'none';
+  eaSuccessState.style.display = 'flex';
+} else {
+  alert("Failed to submit. Please try again.");
+}
     // Show success
     eaFormState.style.display = 'none';
     eaSuccessState.style.display = 'flex';
@@ -2371,8 +2413,3 @@ strong {
   });
 
 })();
-
-</script>
-
-</body>
-</html>
