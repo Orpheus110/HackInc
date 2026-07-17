@@ -1,0 +1,2378 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+/* ═══════════════════════════════════════════════════════
+   hcklnc. — Landing Page Stylesheet
+   Editorial & Handcrafted Precision Design System
+   ═══════════════════════════════════════════════════════ */
+
+/* ── CSS Custom Properties (Design Tokens) ────────── */
+:root {
+  /* Palette */
+  --color-bg:          #F9F8F6;
+  --color-bg-warm:     #F4F1EA;
+  --color-surface:     #FFFFFF;
+  --color-text:        #1A1A18;
+  --color-text-muted:  #6B6860;
+  --color-text-light:  #9A9589;
+  --color-terracotta:  #B06D5B;
+  --color-terracotta-hover: #9A5C4B;
+  --color-slate:       #2C3E50;
+  --color-slate-light: #3D5168;
+  --color-border:      #E5E0D8;
+  --color-border-light:#EDEBE6;
+  --color-success:     #4A7C59;
+  --color-error:       #C1443E;
+
+  /* Typography */
+  --font-serif:   'Newsreader', 'Georgia', serif;
+  --font-sans:    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Spacing */
+  --space-xs:  0.25rem;
+  --space-sm:  0.5rem;
+  --space-md:  1rem;
+  --space-lg:  1.5rem;
+  --space-xl:  2.5rem;
+  --space-2xl: 4rem;
+  --space-3xl: 6rem;
+  --space-4xl: 8rem;
+
+  /* Layout */
+  --max-width: 1200px;
+  --header-height: 64px;
+
+  /* Transitions */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 180ms;
+  --duration-normal: 320ms;
+  --duration-slow: 500ms;
+}
+
+/* ── Reset & Base ─────────────────────────────────── */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  line-height: 1.65;
+  position: relative;
+  overflow-x: hidden;
+}
+
+body.modal-open {
+  overflow: hidden;
+}
+
+/* ── Noise Texture Overlay ────────────────────────── */
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.4;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
+/* ── Typography ───────────────────────────────────── */
+h1, h2, h3, h4 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+p {
+  max-width: 60ch;
+}
+
+a {
+  color: var(--color-terracotta);
+  text-decoration: none;
+  transition: color var(--duration-fast) ease;
+}
+
+a:hover {
+  color: var(--color-terracotta-hover);
+}
+
+strong {
+  font-weight: 600;
+}
+
+/* ── Buttons ──────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all var(--duration-normal) var(--ease-out);
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn-primary {
+  background: var(--color-terracotta);
+  color: #FFFFFF;
+  border-color: var(--color-terracotta);
+}
+
+.btn-primary:hover {
+  background: var(--color-terracotta-hover);
+  border-color: var(--color-terracotta-hover);
+  box-shadow: 0 2px 12px rgba(176, 109, 91, 0.25);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--color-text);
+  border-color: var(--color-border);
+}
+
+.btn-secondary:hover {
+  border-color: var(--color-text-muted);
+  background: rgba(26, 26, 24, 0.03);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--color-text-muted);
+  border: none;
+  padding-left: 0;
+}
+
+.btn-ghost:hover {
+  color: var(--color-text);
+}
+
+.btn-nav {
+  background: transparent;
+  color: var(--color-terracotta);
+  border-color: var(--color-terracotta);
+  padding: 0.5rem 1rem;
+  font-size: 0.8125rem;
+}
+
+.btn-nav:hover {
+  background: var(--color-terracotta);
+  color: #fff;
+}
+
+.btn-full {
+  width: 100%;
+}
+
+/* ── Header ───────────────────────────────────────── */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  height: var(--header-height);
+  background: rgba(249, 248, 246, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--color-border-light);
+  transition: box-shadow var(--duration-normal) ease;
+}
+
+.site-header.scrolled {
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.04);
+}
+
+.header-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-xl);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  text-decoration: none;
+  color: var(--color-text);
+}
+
+.logo-text {
+  font-family: var(--font-sans);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.logo-dot {
+  color: var(--color-terracotta);
+}
+
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xl);
+}
+
+.nav-link {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  transition: color var(--duration-fast) ease;
+  position: relative;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--color-terracotta);
+  transition: width var(--duration-normal) var(--ease-out);
+}
+
+.nav-link:hover {
+  color: var(--color-text);
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* Mobile menu toggle */
+.mobile-menu-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  z-index: 110;
+}
+
+.mobile-menu-toggle span {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  background: var(--color-text);
+  border-radius: 2px;
+  transition: all var(--duration-normal) var(--ease-out);
+}
+
+.mobile-menu-toggle.active span:nth-child(1) {
+  transform: rotate(45deg) translateY(6.5px);
+}
+.mobile-menu-toggle.active span:nth-child(2) {
+  opacity: 0;
+}
+.mobile-menu-toggle.active span:nth-child(3) {
+  transform: rotate(-45deg) translateY(-6.5px);
+}
+
+/* Mobile nav overlay */
+.mobile-nav-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 99;
+  background: rgba(249, 248, 246, 0.97);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  opacity: 0;
+  transition: opacity var(--duration-normal) var(--ease-out);
+}
+
+.mobile-nav-overlay.open {
+  opacity: 1;
+}
+
+.mobile-nav-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  height: 100%;
+  padding: var(--space-3xl) var(--space-xl);
+  gap: var(--space-lg);
+}
+
+.mobile-nav-link {
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  color: var(--color-text);
+  text-decoration: none;
+  transition: color var(--duration-fast) ease;
+}
+
+.mobile-nav-link:hover {
+  color: var(--color-terracotta);
+}
+
+.mobile-nav-cta {
+  margin-top: var(--space-lg);
+}
+
+/* ── Hero ─────────────────────────────────────────── */
+.hero {
+  position: relative;
+  z-index: 1;
+  padding: calc(var(--header-height) + var(--space-3xl)) 0 var(--space-3xl);
+}
+
+.hero-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-xl);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3xl);
+  align-items: center;
+}
+
+.hero-copy {
+  max-width: 540px;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  background: rgba(26, 26, 24, 0.04);
+  border: 1px solid var(--color-border);
+  border-radius: 100px;
+  padding: 0.375rem 0.875rem;
+  margin-bottom: var(--space-lg);
+  letter-spacing: 0.02em;
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--color-success);
+  border-radius: 50%;
+  animation: pulse-dot 2.5s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.hero-headline {
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  font-weight: 500;
+  line-height: 1.12;
+  margin-bottom: var(--space-lg);
+  color: var(--color-text);
+}
+
+.hero-headline-accent {
+  color: var(--color-terracotta);
+}
+
+.hero-sub {
+  font-size: 1.0625rem;
+  color: var(--color-text-muted);
+  line-height: 1.7;
+  margin-bottom: var(--space-xl);
+}
+
+.hero-actions {
+  display: flex;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}
+
+/* ── Mock Dashboard ───────────────────────────────── */
+.hero-visual {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.mock-dashboard {
+  width: 100%;
+  max-width: 520px;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--color-surface);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
+  transition: box-shadow var(--duration-slow) var(--ease-out);
+}
+
+.mock-dashboard:hover {
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.mock-titlebar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: 0.625rem 0.875rem;
+  background: var(--color-bg-warm);
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.mock-dots {
+  display: flex;
+  gap: 5px;
+}
+
+.mock-dots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-border);
+}
+
+.mock-dots span:nth-child(1) { background: #E8B4B0; }
+.mock-dots span:nth-child(2) { background: #E8D9B0; }
+.mock-dots span:nth-child(3) { background: #B0D8B5; }
+
+.mock-title {
+  font-size: 0.6875rem;
+  color: var(--color-text-muted);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.mock-body {
+  display: flex;
+  min-height: 280px;
+}
+
+.mock-sidebar {
+  width: 130px;
+  flex-shrink: 0;
+  border-right: 1px solid var(--color-border-light);
+  padding: var(--space-sm) 0;
+  background: #FCFBF9;
+}
+
+.mock-sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 0.4375rem 0.75rem;
+  font-size: 0.6875rem;
+  color: var(--color-text-muted);
+  cursor: default;
+  transition: all var(--duration-fast) ease;
+  border-left: 2px solid transparent;
+}
+
+.mock-sidebar-item:hover {
+  background: rgba(176, 109, 91, 0.04);
+  color: var(--color-text);
+}
+
+.mock-sidebar-item.active {
+  color: var(--color-terracotta);
+  border-left-color: var(--color-terracotta);
+  background: rgba(176, 109, 91, 0.06);
+  font-weight: 500;
+}
+
+.mock-icon {
+  font-size: 0.75rem;
+  opacity: 0.7;
+}
+
+.mock-content {
+  flex: 1;
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.mock-stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-sm);
+}
+
+.mock-stat {
+  text-align: center;
+  padding: var(--space-sm);
+  border: 1px solid var(--color-border-light);
+  border-radius: 6px;
+  background: var(--color-bg);
+}
+
+.mock-stat-label {
+  display: block;
+  font-size: 0.5625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-light);
+  margin-bottom: 2px;
+}
+
+.mock-stat-value {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--color-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.mock-countdown {
+  color: var(--color-terracotta);
+}
+
+.mock-feed {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.mock-feed-title {
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-text-light);
+  margin-bottom: var(--space-xs);
+  font-weight: 600;
+}
+
+.mock-feed-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 0.375rem 0.5rem;
+  font-size: 0.6875rem;
+  color: var(--color-text-muted);
+  border-radius: 4px;
+  transition: background var(--duration-fast) ease;
+}
+
+.mock-feed-item:hover {
+  background: var(--color-bg);
+}
+
+.feed-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.feed-dot-green { background: var(--color-success); }
+.feed-dot-blue  { background: #4A7CA5; }
+.feed-dot-amber { background: #C49B3B; }
+
+.feed-time {
+  margin-left: auto;
+  font-size: 0.625rem;
+  color: var(--color-text-light);
+  flex-shrink: 0;
+}
+
+/* Feed item entrance animation */
+@keyframes feed-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mock-feed-item.feed-new {
+  animation: feed-slide-in 0.4s var(--ease-out) both;
+}
+
+/* ── Ecosystem Section ────────────────────────────── */
+.ecosystem {
+  position: relative;
+  z-index: 1;
+  padding: var(--space-3xl) 0;
+  border-top: 1px solid var(--color-border-light);
+}
+
+.ecosystem-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-xl);
+}
+
+.section-intro {
+  max-width: 560px;
+  margin-bottom: var(--space-2xl);
+}
+
+.section-heading {
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  margin-bottom: var(--space-md);
+  color: var(--color-text);
+}
+
+.section-sub {
+  font-size: 1.0625rem;
+  color: var(--color-text-muted);
+  line-height: 1.7;
+}
+
+.ecosystem-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2xl);
+}
+
+.eco-column-header {
+  margin-bottom: var(--space-lg);
+  padding-bottom: var(--space-md);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.eco-label {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: var(--color-text);
+  margin-bottom: 2px;
+}
+
+.eco-label-sub {
+  font-size: 0.8125rem;
+  color: var(--color-text-light);
+}
+
+.eco-card {
+  padding: var(--space-lg) 0;
+  border-bottom: 1px solid var(--color-border-light);
+  transition: border-color var(--duration-normal) ease;
+}
+
+.eco-card:last-child {
+  border-bottom: none;
+}
+
+.eco-card:hover {
+  border-bottom-color: var(--color-border);
+}
+
+.eco-card-icon {
+  font-size: 1.125rem;
+  color: var(--color-terracotta);
+  margin-bottom: var(--space-sm);
+  opacity: 0.85;
+}
+
+.eco-card-title {
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  margin-bottom: var(--space-sm);
+  color: var(--color-text);
+}
+
+.eco-card-desc {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  line-height: 1.65;
+}
+
+/* ── Infrastructure Section ───────────────────────── */
+.infrastructure {
+  position: relative;
+  z-index: 1;
+  padding: var(--space-3xl) 0;
+  background: var(--color-bg-warm);
+  border-top: 1px solid var(--color-border-light);
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.infrastructure-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-xl);
+}
+
+.infra-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-xl);
+  margin-top: var(--space-2xl);
+}
+
+.infra-card {
+  padding: var(--space-xl);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-surface);
+  transition: all var(--duration-normal) var(--ease-out);
+}
+
+.infra-card:hover {
+  border-color: var(--color-text-light);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+  transform: translateY(-2px);
+}
+
+.infra-icon {
+  color: var(--color-terracotta);
+  margin-bottom: var(--space-md);
+}
+
+.infra-title {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: var(--space-sm);
+  color: var(--color-text);
+}
+
+.infra-desc {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  line-height: 1.65;
+}
+
+/* ── Final CTA ────────────────────────────────────── */
+.final-cta {
+  position: relative;
+  z-index: 1;
+  padding: var(--space-4xl) 0;
+  text-align: center;
+}
+
+.final-cta-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.final-cta-heading {
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  margin-bottom: var(--space-md);
+}
+
+.final-cta-sub {
+  font-size: 1.0625rem;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-xl);
+  text-align: center;
+}
+
+/* ── Footer ───────────────────────────────────────── */
+.site-footer {
+  position: relative;
+  z-index: 1;
+  border-top: 1px solid var(--color-border);
+  padding: var(--space-xl) 0;
+}
+
+.footer-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-xl);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+}
+
+.footer-brand {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.footer-tagline {
+  font-size: 0.8125rem;
+  color: var(--color-text-light);
+  margin-left: var(--space-md);
+}
+
+.footer-right {
+  display: flex;
+  gap: var(--space-lg);
+}
+
+.footer-link {
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  transition: color var(--duration-fast) ease;
+}
+
+.footer-link:hover {
+  color: var(--color-text);
+}
+
+/* ═══════════════════════════════════════════════════ */
+/* MODALS                                              */
+/* ═══════════════════════════════════════════════════ */
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--duration-normal) ease, visibility var(--duration-normal) ease;
+}
+
+.modal-backdrop.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal {
+  position: relative;
+  width: 90%;
+  max-width: 480px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: var(--space-2xl);
+  box-shadow: 0 16px 64px rgba(0, 0, 0, 0.12);
+  transform: translateY(12px) scale(0.98);
+  transition: transform var(--duration-normal) var(--ease-out);
+}
+
+.modal-backdrop.open .modal {
+  transform: translateY(0) scale(1);
+}
+
+.modal-survey {
+  max-width: 540px;
+}
+
+.modal-close {
+  position: absolute;
+  top: var(--space-md);
+  right: var(--space-md);
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  font-size: 1.25rem;
+  color: var(--color-text-light);
+  cursor: pointer;
+  transition: all var(--duration-fast) ease;
+}
+
+.modal-close:hover {
+  background: var(--color-bg);
+  border-color: var(--color-border);
+  color: var(--color-text);
+}
+
+.modal-title {
+  font-size: 1.5rem;
+  margin-bottom: var(--space-sm);
+}
+
+.modal-sub {
+  font-size: 0.9375rem;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-xl);
+  line-height: 1.6;
+}
+
+.modal-hint {
+  font-size: 0.8125rem;
+  color: var(--color-text-light);
+  margin-bottom: var(--space-lg);
+  font-style: italic;
+}
+
+/* ── Form Elements ────────────────────────────────── */
+.form-group {
+  margin-bottom: var(--space-lg);
+}
+
+.form-label {
+  display: block;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--color-text);
+  margin-bottom: var(--space-sm);
+}
+
+.required {
+  color: var(--color-terracotta);
+}
+
+.optional {
+  color: var(--color-text-light);
+  font-weight: 400;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.6875rem 0.875rem;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  color: var(--color-text);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  outline: none;
+  transition: border-color var(--duration-fast) ease, box-shadow var(--duration-fast) ease;
+}
+
+.form-input::placeholder {
+  color: var(--color-text-light);
+}
+
+.form-input:focus {
+  border-color: var(--color-terracotta);
+  box-shadow: 0 0 0 3px rgba(176, 109, 91, 0.1);
+}
+
+.form-input.input-error {
+  border-color: var(--color-error);
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 60px;
+}
+
+.form-error {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--color-error);
+  margin-top: var(--space-xs);
+  min-height: 1rem;
+}
+
+/* Segmented control */
+.segmented-control {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.segment {
+  position: relative;
+  cursor: pointer;
+}
+
+.segment input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.segment-label {
+  display: inline-block;
+  padding: 0.5rem 0.875rem;
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  transition: all var(--duration-fast) ease;
+  user-select: none;
+}
+
+.segment-label:hover {
+  border-color: var(--color-text-light);
+  color: var(--color-text);
+}
+
+.segment input[type="radio"]:checked + .segment-label {
+  background: var(--color-terracotta);
+  border-color: var(--color-terracotta);
+  color: #fff;
+}
+
+.segment input[type="radio"]:focus-visible + .segment-label {
+  box-shadow: 0 0 0 3px rgba(176, 109, 91, 0.2);
+}
+
+/* Checkboxes */
+.checkbox-label {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  cursor: pointer;
+  position: relative;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--color-text);
+}
+
+.checkbox-label input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.checkbox-custom {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid var(--color-border);
+  border-radius: 4px;
+  background: var(--color-bg);
+  transition: all var(--duration-fast) ease;
+  position: relative;
+  margin-top: 2px;
+}
+
+.checkbox-custom::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 5px;
+  width: 5px;
+  height: 9px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg) scale(0);
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.checkbox-label input[type="checkbox"]:checked + .checkbox-custom {
+  background: var(--color-terracotta);
+  border-color: var(--color-terracotta);
+}
+
+.checkbox-label input[type="checkbox"]:checked + .checkbox-custom::after {
+  transform: rotate(45deg) scale(1);
+}
+
+.checkbox-label input[type="checkbox"]:focus-visible + .checkbox-custom {
+  box-shadow: 0 0 0 3px rgba(176, 109, 91, 0.2);
+}
+
+.form-consent {
+  margin-bottom: var(--space-lg);
+}
+
+.consent-text {
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+.inline-link {
+  color: var(--color-terracotta);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Checkbox group (survey) */
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+.survey-option {
+  padding: 0.75rem;
+  border: 1px solid var(--color-border-light);
+  border-radius: 8px;
+  transition: all var(--duration-fast) ease;
+}
+
+.survey-option:hover {
+  border-color: var(--color-border);
+  background: rgba(26, 26, 24, 0.015);
+}
+
+.survey-option:has(input:checked) {
+  border-color: var(--color-terracotta);
+  background: rgba(176, 109, 91, 0.04);
+}
+
+.survey-other-input {
+  margin-top: var(--space-sm);
+  margin-left: calc(18px + var(--space-sm));
+}
+
+/* ── Wizard Progress ──────────────────────────────── */
+.wizard-progress {
+  width: 100%;
+  height: 3px;
+  background: var(--color-border-light);
+  border-radius: 3px;
+  margin-bottom: var(--space-sm);
+  overflow: hidden;
+}
+
+.wizard-progress-bar {
+  height: 100%;
+  background: var(--color-terracotta);
+  border-radius: 3px;
+  transition: width var(--duration-slow) var(--ease-out);
+}
+
+.wizard-step-indicator {
+  margin-bottom: var(--space-xl);
+}
+
+.wizard-step-label {
+  font-size: 0.75rem;
+  color: var(--color-text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 500;
+}
+
+.wizard-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+/* Wizard step transitions */
+.wizard-step {
+  animation: wizard-enter var(--duration-normal) var(--ease-out) both;
+}
+
+@keyframes wizard-enter {
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ── Success State ────────────────────────────────── */
+.success-icon {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: var(--color-success);
+  background: rgba(74, 124, 89, 0.08);
+  border: 1px solid rgba(74, 124, 89, 0.2);
+  border-radius: 50%;
+  margin-bottom: var(--space-lg);
+}
+
+.modal-success-state,
+#wizard-success {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ═══════════════════════════════════════════════════ */
+/* SCROLL REVEAL ANIMATIONS                            */
+/* ═══════════════════════════════════════════════════ */
+
+.eco-card,
+.infra-card {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity var(--duration-slow) var(--ease-out),
+              transform var(--duration-slow) var(--ease-out);
+}
+
+.eco-card.revealed,
+.infra-card.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ═══════════════════════════════════════════════════ */
+/* RESPONSIVE                                          */
+/* ═══════════════════════════════════════════════════ */
+
+@media (max-width: 960px) {
+  .hero-inner {
+    grid-template-columns: 1fr;
+    gap: var(--space-2xl);
+  }
+
+  .hero-copy {
+    max-width: 100%;
+  }
+
+  .hero-visual {
+    justify-content: center;
+  }
+
+  .mock-dashboard {
+    max-width: 100%;
+  }
+
+  .ecosystem-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-2xl);
+  }
+
+  .infra-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+}
+
+@media (max-width: 640px) {
+  :root {
+    --space-xl: 1.5rem;
+    --space-2xl: 2.5rem;
+    --space-3xl: 3.5rem;
+    --space-4xl: 5rem;
+  }
+
+  .header-nav {
+    display: none;
+  }
+
+  .mobile-menu-toggle {
+    display: flex;
+  }
+
+  .mobile-nav-overlay.open {
+    display: block;
+  }
+
+  .hero-headline {
+    font-size: 1.875rem;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+  }
+
+  .hero-actions .btn {
+    width: 100%;
+  }
+
+  .mock-body {
+    flex-direction: column;
+  }
+
+  .mock-sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid var(--color-border-light);
+    display: flex;
+    overflow-x: auto;
+    padding: var(--space-xs) var(--space-sm);
+    gap: var(--space-xs);
+  }
+
+  .mock-sidebar-item {
+    white-space: nowrap;
+    border-left: none;
+    border-bottom: 2px solid transparent;
+    padding: var(--space-xs) var(--space-sm);
+  }
+
+  .mock-sidebar-item.active {
+    border-left-color: transparent;
+    border-bottom-color: var(--color-terracotta);
+  }
+
+  .mock-stats-row {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .modal {
+    padding: var(--space-xl);
+    width: 95%;
+    max-height: 95vh;
+  }
+
+  .segmented-control {
+    flex-direction: column;
+  }
+
+  .footer-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-lg);
+  }
+
+  .footer-tagline {
+    margin-left: 0;
+    display: block;
+    margin-top: var(--space-xs);
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>hcklnc. — The Unified Hackathon Command Center</title>
+  <meta name="description" content="hcklnc. unifies event discovery, smart team formation, project submission, and live event management into one seamless operating system for hackathon builders and organizers.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- SVG noise filter for parchment texture -->
+  <svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+    <filter id="paper-noise">
+      <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" result="noise"/>
+      <feColorMatrix type="saturate" values="0" in="noise" result="gray-noise"/>
+      <feBlend in="SourceGraphic" in2="gray-noise" mode="multiply" result="blended"/>
+      <feComponentTransfer in="blended">
+        <feFuncA type="linear" slope="0.03"/>
+      </feComponentTransfer>
+    </filter>
+  </svg>
+
+  <div class="noise-overlay" aria-hidden="true"></div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- HEADER / NAV                                -->
+  <!-- ═══════════════════════════════════════════ -->
+  <header class="site-header" id="site-header">
+    <div class="header-inner">
+      <a href="/" class="logo" aria-label="hcklnc. home">
+        <span class="logo-text">hcklnc<span class="logo-dot">.</span></span>
+      </a>
+      <nav class="header-nav" aria-label="Primary navigation">
+        <a href="#ecosystem" class="nav-link">Ecosystem</a>
+        <a href="#infrastructure" class="nav-link">Infrastructure</a>
+        <button class="btn btn-nav" id="nav-early-access-btn" type="button">Request Access</button>
+      </nav>
+      <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle navigation menu" type="button">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile menu overlay -->
+  <div class="mobile-nav-overlay" id="mobile-nav-overlay" aria-hidden="true">
+    <nav class="mobile-nav-inner" aria-label="Mobile navigation">
+      <a href="#ecosystem" class="mobile-nav-link">Ecosystem</a>
+      <a href="#infrastructure" class="mobile-nav-link">Infrastructure</a>
+      <button class="btn btn-primary mobile-nav-cta" id="mobile-early-access-btn" type="button">Request Access</button>
+    </nav>
+  </div>
+
+  <main>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SECTION 1: HERO                             -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section class="hero" id="hero">
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <div class="status-badge">
+            <span class="status-dot"></span>
+            Private Beta In Development — v1.0.0
+          </div>
+          <h1 class="hero-headline">
+            The fragmented hackathon is&nbsp;dead.<br>
+            <span class="hero-headline-accent">Welcome to the unified command&nbsp;center.</span>
+          </h1>
+          <p class="hero-sub">
+            Stop jumping between chaotic Discord servers, messy spreadsheets, broken submission links, and fragmented judging forms. <strong>hcklnc.</strong> unifies the entire builder and organizer journey into one seamless operating&nbsp;system.
+          </p>
+          <div class="hero-actions">
+            <button class="btn btn-primary" id="hero-early-access-btn" type="button">Request Early Access</button>
+            <button class="btn btn-secondary" id="hero-survey-btn" type="button">Shape the Platform</button>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-label="hcklnc. dashboard preview">
+          <!-- Interactive CSS dashboard mock -->
+          <div class="mock-dashboard">
+            <div class="mock-titlebar">
+              <div class="mock-dots"><span></span><span></span><span></span></div>
+              <span class="mock-title">hcklnc. — Command Center</span>
+            </div>
+            <div class="mock-body">
+              <div class="mock-sidebar">
+                <div class="mock-sidebar-item active"><span class="mock-icon">◉</span> Dashboard</div>
+                <div class="mock-sidebar-item"><span class="mock-icon">⊞</span> Teams</div>
+                <div class="mock-sidebar-item"><span class="mock-icon">↗</span> Submissions</div>
+                <div class="mock-sidebar-item"><span class="mock-icon">◎</span> Judging</div>
+                <div class="mock-sidebar-item"><span class="mock-icon">⚙</span> Settings</div>
+              </div>
+              <div class="mock-content">
+                <div class="mock-stats-row">
+                  <div class="mock-stat">
+                    <span class="mock-stat-label">Active Teams</span>
+                    <span class="mock-stat-value" id="mock-teams">47</span>
+                  </div>
+                  <div class="mock-stat">
+                    <span class="mock-stat-label">Submissions</span>
+                    <span class="mock-stat-value" id="mock-subs">12</span>
+                  </div>
+                  <div class="mock-stat">
+                    <span class="mock-stat-label">Time Left</span>
+                    <span class="mock-stat-value mock-countdown" id="mock-time">06:42:18</span>
+                  </div>
+                </div>
+                <div class="mock-feed">
+                  <div class="mock-feed-title">Live Activity</div>
+                  <div class="mock-feed-item" id="feed-1">
+                    <span class="feed-dot feed-dot-green"></span>
+                    <span>Team "NeuralNomads" submitted project</span>
+                    <span class="feed-time">2m ago</span>
+                  </div>
+                  <div class="mock-feed-item" id="feed-2">
+                    <span class="feed-dot feed-dot-blue"></span>
+                    <span>3 new members matched to Team "Byteforce"</span>
+                    <span class="feed-time">5m ago</span>
+                  </div>
+                  <div class="mock-feed-item" id="feed-3">
+                    <span class="feed-dot feed-dot-amber"></span>
+                    <span>Mentor session booked — AI track</span>
+                    <span class="feed-time">8m ago</span>
+                  </div>
+                  <div class="mock-feed-item" id="feed-4">
+                    <span class="feed-dot feed-dot-green"></span>
+                    <span>Sponsor bounty claimed: AWS Credits</span>
+                    <span class="feed-time">12m ago</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SECTION 2: TWO-SIDED ECOSYSTEM              -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section class="ecosystem" id="ecosystem">
+      <div class="ecosystem-inner">
+        <div class="section-intro">
+          <h2 class="section-heading">Two sides. One&nbsp;ecosystem.</h2>
+          <p class="section-sub">Whether you're shipping code at 3 AM or orchestrating a 500-person venue, <strong>hcklnc.</strong> has your operating layer.</p>
+        </div>
+
+        <div class="ecosystem-grid">
+          <!-- Column A: Builders -->
+          <div class="eco-column eco-builders">
+            <div class="eco-column-header">
+              <span class="eco-label">For Builders</span>
+              <span class="eco-label-sub">Participants & Hackers</span>
+            </div>
+
+            <div class="eco-card">
+              <div class="eco-card-icon">⟁</div>
+              <h3 class="eco-card-title">Smart Team Formation Engine</h3>
+              <p class="eco-card-desc">Move beyond random Discord introductions. Our algorithm matches teammates based on technical skill tags, verified past builds, and shared competitive goals.</p>
+            </div>
+
+            <div class="eco-card">
+              <div class="eco-card-icon">◈</div>
+              <h3 class="eco-card-title">The Hackathon Passport</h3>
+              <p class="eco-card-desc">A verified, living developer portfolio that aggregates your event history, project repositories, and skill badges — replacing static&nbsp;resumes.</p>
+            </div>
+
+            <div class="eco-card">
+              <div class="eco-card-icon">✓</div>
+              <h3 class="eco-card-title">Submission Pre-Flight Wizard</h3>
+              <p class="eco-card-desc">An automated 24-hour countdown checklist that validates repository links, demo videos, and team limits before the deadline&nbsp;strikes.</p>
+            </div>
+
+            <div class="eco-card">
+              <div class="eco-card-icon">◉</div>
+              <h3 class="eco-card-title">On-Demand Mentor Booking</h3>
+              <p class="eco-card-desc">Directly reserve 15-minute 1-on-1 debugging slots with technical mentors categorized by expertise — AI, Frontend, Deployment.</p>
+            </div>
+          </div>
+
+          <!-- Column B: Organizers -->
+          <div class="eco-column eco-organizers">
+            <div class="eco-column-header">
+              <span class="eco-label">For Organizers</span>
+              <span class="eco-label-sub">Event Leads & Sponsors</span>
+            </div>
+
+            <div class="eco-card">
+              <div class="eco-card-icon">⊞</div>
+              <h3 class="eco-card-title">Dynamic Event Controls</h3>
+              <p class="eco-card-desc">Adjust submission timelines, update rules, and modify prize pools in real time through a dedicated command&nbsp;panel.</p>
+            </div>
+
+            <div class="eco-card">
+              <div class="eco-card-icon">↗</div>
+              <h3 class="eco-card-title">Automated Communication Hub</h3>
+              <p class="eco-card-desc">Replace manual announcements with scheduled email/SMS drip campaigns and urgent mobile push broadcasts for critical venue&nbsp;updates.</p>
+            </div>
+
+            <div class="eco-card">
+              <div class="eco-card-icon">⊡</div>
+              <h3 class="eco-card-title">Offline Venue Intelligence</h3>
+              <p class="eco-card-desc">Bridge physical and digital spaces with interactive floor plans displaying real-time power socket availability, workshop zones, and QR-based attendance&nbsp;tracking.</p>
+            </div>
+
+            <div class="eco-card">
+              <div class="eco-card-icon">§</div>
+              <h3 class="eco-card-title">Automated Legal Compliance</h3>
+              <p class="eco-card-desc">Generate region-specific Terms & Conditions and Privacy Policy agreements instantly, with mandatory digital sign-off tracking for&nbsp;participants.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SECTION 3: INFRASTRUCTURE & TRUST BANNER    -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section class="infrastructure" id="infrastructure">
+      <div class="infrastructure-inner">
+        <h2 class="section-heading">Enterprise-grade from day&nbsp;one.</h2>
+        <div class="infra-grid">
+          <div class="infra-card">
+            <div class="infra-icon">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3H4a2 2 0 0 0-2 2v6m26-8h-6m6 0v6M10 25H4a2 2 0 0 1-2-2v-6m26 8h-6m6 0v-6"/><rect x="8" y="8" width="12" height="12" rx="2"/></svg>
+            </div>
+            <h3 class="infra-title">One-Click Dev Integrations</h3>
+            <p class="infra-desc">Seamlessly pull project artifacts from GitHub, Figma, and Vercel without manual uploading.</p>
+          </div>
+          <div class="infra-card">
+            <div class="infra-icon">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+            </div>
+            <h3 class="infra-title">Fair & Transparent Judging</h3>
+            <p class="infra-desc">Real-time rubric evaluation previews and live scoring scorecards that eliminate judging biases and delays.</p>
+          </div>
+          <div class="infra-card">
+            <div class="infra-icon">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="24" height="16" rx="3"/><path d="M2 12h24"/><path d="M8 18h4"/></svg>
+            </div>
+            <h3 class="infra-title">Sponsor Bounties & Cloud Credits</h3>
+            <p class="infra-desc">Securely claim AWS/GCP cloud credits and compete for dedicated corporate micro-bounties directly within your workspace.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- FINAL CTA BAND                              -->
+    <!-- ═══════════════════════════════════════════ -->
+    <section class="final-cta">
+      <div class="final-cta-inner">
+        <h2 class="final-cta-heading">Ready to leave the chaos&nbsp;behind?</h2>
+        <p class="final-cta-sub">Join the private beta and help shape the future of hackathons.</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" id="cta-early-access-btn" type="button">Request Early Access</button>
+          <button class="btn btn-secondary" id="cta-survey-btn" type="button">Shape the Platform</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- FOOTER                                      -->
+  <!-- ═══════════════════════════════════════════ -->
+  <footer class="site-footer" id="site-footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <span class="footer-brand">hcklnc<span class="logo-dot">.</span></span>
+        <span class="footer-tagline">Built for developers, by developers.</span>
+      </div>
+      <div class="footer-right">
+        <a href="#" class="footer-link">Documentation</a>
+        <a href="#" class="footer-link">Privacy Policy</a>
+        <a href="#" class="footer-link">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- MODAL 1: EARLY ACCESS REGISTRATION          -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="modal-backdrop" id="early-access-modal" role="dialog" aria-modal="true" aria-labelledby="ea-modal-title" aria-hidden="true">
+    <div class="modal" id="early-access-modal-content">
+      <button class="modal-close" id="ea-modal-close" aria-label="Close dialog" type="button">&times;</button>
+
+      <!-- Form state -->
+      <div class="modal-form-state" id="ea-form-state">
+        <h2 class="modal-title" id="ea-modal-title">Join the <strong>hcklnc.</strong> Private&nbsp;Beta.</h2>
+        <p class="modal-sub">We are onboarding a select group of hackers and organizers for our upcoming release.</p>
+        <form id="ea-form" novalidate>
+          <div class="form-group">
+            <label class="form-label" for="ea-name">Full Name <span class="required">*</span></label>
+            <input class="form-input" type="text" id="ea-name" name="name" required autocomplete="name" placeholder="Jane Doe">
+            <span class="form-error" id="ea-name-error"></span>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="ea-email">Email Address <span class="required">*</span></label>
+            <input class="form-input" type="email" id="ea-email" name="email" required autocomplete="email" placeholder="you@example.com">
+            <span class="form-error" id="ea-email-error"></span>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Primary Role <span class="required">*</span></label>
+            <div class="segmented-control" id="ea-role-control">
+              <label class="segment">
+                <input type="radio" name="role" value="builder" required>
+                <span class="segment-label">Builder / Participant</span>
+              </label>
+              <label class="segment">
+                <input type="radio" name="role" value="organizer">
+                <span class="segment-label">Event Organizer</span>
+              </label>
+              <label class="segment">
+                <input type="radio" name="role" value="sponsor">
+                <span class="segment-label">Sponsor / Mentor</span>
+              </label>
+            </div>
+            <span class="form-error" id="ea-role-error"></span>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="ea-profile">GitHub / LinkedIn URL <span class="optional">(Optional)</span></label>
+            <input class="form-input" type="url" id="ea-profile" name="profile_url" autocomplete="url" placeholder="https://github.com/you">
+          </div>
+          <div class="form-group form-consent">
+            <label class="checkbox-label">
+              <input type="checkbox" id="ea-consent" name="consent" required>
+              <span class="checkbox-custom"></span>
+              <span class="consent-text">I agree to the processing of my data in accordance with the <a href="#" class="inline-link">hcklnc. Privacy Policy</a>.</span>
+            </label>
+            <span class="form-error" id="ea-consent-error"></span>
+          </div>
+          <button class="btn btn-primary btn-full" type="submit" id="ea-submit-btn">Claim Early Access</button>
+        </form>
+      </div>
+
+      <!-- Success state -->
+      <div class="modal-success-state" id="ea-success-state" style="display:none">
+        <div class="success-icon">✓</div>
+        <h2 class="modal-title">You're on the&nbsp;list.</h2>
+        <p class="modal-sub">We'll be in touch as we open up infrastructure slots. Keep an eye on your inbox.</p>
+        <button class="btn btn-secondary" id="ea-success-close" type="button">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- MODAL 2: COMMUNITY SURVEY WIZARD            -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="modal-backdrop" id="survey-modal" role="dialog" aria-modal="true" aria-labelledby="survey-modal-title" aria-hidden="true">
+    <div class="modal modal-survey" id="survey-modal-content">
+      <button class="modal-close" id="survey-modal-close" aria-label="Close dialog" type="button">&times;</button>
+
+      <!-- Progress bar -->
+      <div class="wizard-progress">
+        <div class="wizard-progress-bar" id="wizard-progress-bar" style="width: 33.33%"></div>
+      </div>
+      <div class="wizard-step-indicator">
+        <span class="wizard-step-label" id="wizard-step-label">Step 1 of 3</span>
+      </div>
+
+      <!-- Step 1 -->
+      <div class="wizard-step" id="wizard-step-1" data-step="1">
+        <h2 class="modal-title" id="survey-modal-title">The Biggest Pain&nbsp;Point</h2>
+        <p class="modal-sub">What is the single most frustrating part of participating in or hosting a hackathon today?</p>
+        <p class="modal-hint">Select all that apply.</p>
+        <form id="survey-step-1-form">
+          <div class="checkbox-group">
+            <label class="checkbox-label survey-option">
+              <input type="checkbox" name="pain_points" value="teammates">
+              <span class="checkbox-custom"></span>
+              <span>Finding reliable, skilled teammates</span>
+            </label>
+            <label class="checkbox-label survey-option">
+              <input type="checkbox" name="pain_points" value="announcements">
+              <span class="checkbox-custom"></span>
+              <span>Missing announcements lost in noisy Discord channels</span>
+            </label>
+            <label class="checkbox-label survey-option">
+              <input type="checkbox" name="pain_points" value="submissions">
+              <span class="checkbox-custom"></span>
+              <span>Chaotic project submission and broken deadline links</span>
+            </label>
+            <label class="checkbox-label survey-option">
+              <input type="checkbox" name="pain_points" value="judging">
+              <span class="checkbox-custom"></span>
+              <span>Opaque judging criteria and delayed results</span>
+            </label>
+            <label class="checkbox-label survey-option">
+              <input type="checkbox" name="pain_points" value="venue">
+              <span class="checkbox-custom"></span>
+              <span>Managing offline venue logistics and check-ins</span>
+            </label>
+            <label class="checkbox-label survey-option survey-option-other">
+              <input type="checkbox" name="pain_points" value="other" id="pain-other-check">
+              <span class="checkbox-custom"></span>
+              <span>Other</span>
+            </label>
+            <textarea class="form-input form-textarea survey-other-input" id="pain-other-text" name="pain_other_text" placeholder="Tell us more..." rows="2" style="display:none"></textarea>
+          </div>
+          <span class="form-error" id="survey-step-1-error"></span>
+          <button class="btn btn-primary btn-full" type="submit">Continue</button>
+        </form>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="wizard-step" id="wizard-step-2" data-step="2" style="display:none">
+        <h2 class="modal-title">The "Only Us" Feature&nbsp;Wishlist</h2>
+        <p class="modal-sub">If you could wave a magic wand and add one extraordinary feature to a hackathon platform that no one else has built, what would it&nbsp;be?</p>
+        <form id="survey-step-2-form">
+          <div class="form-group">
+            <textarea class="form-input form-textarea" id="survey-feature" name="feature_wish" rows="5" placeholder='e.g., Automated GitHub commit analysis to verify code wasn't pre-written before the event...' required></textarea>
+            <span class="form-error" id="survey-step-2-error"></span>
+          </div>
+          <div class="wizard-nav">
+            <button class="btn btn-ghost" type="button" id="wizard-back-2">← Back</button>
+            <button class="btn btn-primary" type="submit">Continue</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="wizard-step" id="wizard-step-3" data-step="3" style="display:none">
+        <h2 class="modal-title">Claim Your Priority&nbsp;Access</h2>
+        <p class="modal-sub">Where should we send your early-access invite and contributor badge?</p>
+        <form id="survey-step-3-form">
+          <div class="form-group">
+            <label class="form-label" for="survey-email">Email Address <span class="required">*</span></label>
+            <input class="form-input" type="email" id="survey-email" name="email" required autocomplete="email" placeholder="you@example.com">
+            <span class="form-error" id="survey-email-error"></span>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="survey-handle">Name / Handle <span class="optional">(Optional)</span></label>
+            <input class="form-input" type="text" id="survey-handle" name="handle" autocomplete="nickname" placeholder="@yourusername">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="survey-org">University / Organization <span class="optional">(Optional)</span></label>
+            <input class="form-input" type="text" id="survey-org" name="organization" autocomplete="organization" placeholder="MIT, Google, etc.">
+          </div>
+          <div class="form-group form-consent">
+            <label class="checkbox-label">
+              <input type="checkbox" id="survey-consent" name="consent" required>
+              <span class="checkbox-custom"></span>
+              <span class="consent-text">I agree to the processing of my data in accordance with the <a href="#" class="inline-link">hcklnc. Privacy Policy</a>.</span>
+            </label>
+            <span class="form-error" id="survey-consent-error"></span>
+          </div>
+          <div class="wizard-nav">
+            <button class="btn btn-ghost" type="button" id="wizard-back-3">← Back</button>
+            <button class="btn btn-primary" type="submit" id="survey-submit-btn">Submit Feedback & Lock In Priority Access</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Success state -->
+      <div class="wizard-step" id="wizard-success" style="display:none">
+        <div class="success-icon">✓</div>
+        <h2 class="modal-title">Your voice shapes the&nbsp;product.</h2>
+        <p class="modal-sub">You've been granted priority access. We'll be in touch with your contributor badge and beta invite.</p>
+        <button class="btn btn-secondary" id="survey-success-close" type="button">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
+
+
+<script>
+/* ═══════════════════════════════════════════════════════
+   hcklnc. — Landing Page Logic
+   Modal handling, survey wizard, form validation,
+   scroll reveals, and interactive dashboard mock.
+   ═══════════════════════════════════════════════════════ */
+
+(function () {
+  'use strict';
+
+  // ── Utility: Sanitize user input ─────────────────
+  function sanitize(str) {
+    const div = document.createElement('div');
+    div.appendChild(document.createTextNode(str));
+    return div.innerHTML;
+  }
+
+  // ── Utility: Email validation ────────────────────
+  function isValidEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+
+  // ── Storage Service (localStorage fallback) ──────
+  const StorageService = {
+    save(collection, data) {
+      try {
+        const key = `hcklnc_${collection}`;
+        const existing = JSON.parse(localStorage.getItem(key) || '[]');
+        existing.push({ ...data, timestamp: new Date().toISOString() });
+        localStorage.setItem(key, JSON.stringify(existing));
+        console.log(`[hcklnc] Saved to ${collection}:`, data);
+        return true;
+      } catch (e) {
+        console.error('[hcklnc] Storage error:', e);
+        return false;
+      }
+    }
+  };
+
+  // ═════════════════════════════════════════════════
+  // HEADER SCROLL EFFECT
+  // ═════════════════════════════════════════════════
+
+  const header = document.getElementById('site-header');
+  let lastScrollY = 0;
+
+  function onScroll() {
+    const scrollY = window.scrollY;
+    if (scrollY > 10) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+    lastScrollY = scrollY;
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // ═════════════════════════════════════════════════
+  // MOBILE MENU
+  // ═════════════════════════════════════════════════
+
+  const mobileToggle = document.getElementById('mobile-menu-toggle');
+  const mobileOverlay = document.getElementById('mobile-nav-overlay');
+
+  function openMobileMenu() {
+    mobileToggle.classList.add('active');
+    mobileOverlay.style.display = 'block';
+    mobileOverlay.setAttribute('aria-hidden', 'false');
+    requestAnimationFrame(() => {
+      mobileOverlay.classList.add('open');
+    });
+    document.body.classList.add('modal-open');
+  }
+
+  function closeMobileMenu() {
+    mobileToggle.classList.remove('active');
+    mobileOverlay.classList.remove('open');
+    mobileOverlay.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('modal-open');
+    setTimeout(() => {
+      if (!mobileOverlay.classList.contains('open')) {
+        mobileOverlay.style.display = 'none';
+      }
+    }, 320);
+  }
+
+  mobileToggle.addEventListener('click', () => {
+    if (mobileOverlay.classList.contains('open')) {
+      closeMobileMenu();
+    } else {
+      openMobileMenu();
+    }
+  });
+
+  // Close mobile menu on link click
+  mobileOverlay.querySelectorAll('.mobile-nav-link').forEach(link => {
+    link.addEventListener('click', closeMobileMenu);
+  });
+
+  // ═════════════════════════════════════════════════
+  // MODAL SYSTEM
+  // ═════════════════════════════════════════════════
+
+  function openModal(modalEl) {
+    modalEl.classList.add('open');
+    modalEl.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('modal-open');
+
+    // Focus trap setup
+    const focusable = modalEl.querySelectorAll(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    );
+    if (focusable.length) {
+      focusable[0].focus();
+    }
+
+    // Trap focus inside modal
+    modalEl._trapFocus = function (e) {
+      if (e.key === 'Tab' && focusable.length) {
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey) {
+          if (document.activeElement === first) {
+            e.preventDefault();
+            last.focus();
+          }
+        } else {
+          if (document.activeElement === last) {
+            e.preventDefault();
+            first.focus();
+          }
+        }
+      }
+      if (e.key === 'Escape') {
+        closeModal(modalEl);
+      }
+    };
+    document.addEventListener('keydown', modalEl._trapFocus);
+  }
+
+  function closeModal(modalEl) {
+    modalEl.classList.remove('open');
+    modalEl.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('modal-open');
+
+    if (modalEl._trapFocus) {
+      document.removeEventListener('keydown', modalEl._trapFocus);
+    }
+  }
+
+  // Click backdrop to close
+  document.querySelectorAll('.modal-backdrop').forEach(backdrop => {
+    backdrop.addEventListener('click', (e) => {
+      if (e.target === backdrop) {
+        closeModal(backdrop);
+      }
+    });
+  });
+
+  // ═════════════════════════════════════════════════
+  // EARLY ACCESS MODAL
+  // ═════════════════════════════════════════════════
+
+  const eaModal = document.getElementById('early-access-modal');
+  const eaForm = document.getElementById('ea-form');
+  const eaFormState = document.getElementById('ea-form-state');
+  const eaSuccessState = document.getElementById('ea-success-state');
+
+  // Open triggers
+  const eaOpenButtons = [
+    'hero-early-access-btn',
+    'cta-early-access-btn',
+    'nav-early-access-btn',
+    'mobile-early-access-btn'
+  ];
+
+  eaOpenButtons.forEach(id => {
+    const btn = document.getElementById(id);
+    if (btn) {
+      btn.addEventListener('click', () => {
+        closeMobileMenu();
+        resetEaForm();
+        openModal(eaModal);
+      });
+    }
+  });
+
+  // Close triggers
+  document.getElementById('ea-modal-close').addEventListener('click', () => closeModal(eaModal));
+  document.getElementById('ea-success-close').addEventListener('click', () => closeModal(eaModal));
+
+  function resetEaForm() {
+    eaForm.reset();
+    eaFormState.style.display = 'block';
+    eaSuccessState.style.display = 'none';
+    clearErrors(eaForm);
+  }
+
+  function clearErrors(form) {
+    form.querySelectorAll('.form-error').forEach(el => el.textContent = '');
+    form.querySelectorAll('.input-error').forEach(el => el.classList.remove('input-error'));
+  }
+
+  eaForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    clearErrors(eaForm);
+
+    let valid = true;
+
+    const name = document.getElementById('ea-name');
+    const email = document.getElementById('ea-email');
+    const consent = document.getElementById('ea-consent');
+    const roleChecked = eaForm.querySelector('input[name="role"]:checked');
+
+    if (!name.value.trim()) {
+      document.getElementById('ea-name-error').textContent = 'Full name is required.';
+      name.classList.add('input-error');
+      valid = false;
+    }
+
+    if (!email.value.trim() || !isValidEmail(email.value.trim())) {
+      document.getElementById('ea-email-error').textContent = 'A valid email address is required.';
+      email.classList.add('input-error');
+      valid = false;
+    }
+
+    if (!roleChecked) {
+      document.getElementById('ea-role-error').textContent = 'Please select your primary role.';
+      valid = false;
+    }
+
+    if (!consent.checked) {
+      document.getElementById('ea-consent-error').textContent = 'You must agree to the Privacy Policy.';
+      valid = false;
+    }
+
+    if (!valid) return;
+
+    // Collect and sanitize data
+    const data = {
+      name: sanitize(name.value.trim()),
+      email: sanitize(email.value.trim()),
+      role: roleChecked.value,
+      profile_url: sanitize(document.getElementById('ea-profile').value.trim()),
+      consent: true
+    };
+
+    StorageService.save('early_access', data);
+
+    // Show success
+    eaFormState.style.display = 'none';
+    eaSuccessState.style.display = 'flex';
+  });
+
+  // ═════════════════════════════════════════════════
+  // SURVEY WIZARD MODAL
+  // ═════════════════════════════════════════════════
+
+  const surveyModal = document.getElementById('survey-modal');
+  const progressBar = document.getElementById('wizard-progress-bar');
+  const stepLabel = document.getElementById('wizard-step-label');
+  let currentStep = 1;
+  const surveyData = {};
+
+  // Open triggers
+  const surveyOpenButtons = ['hero-survey-btn', 'cta-survey-btn'];
+
+  surveyOpenButtons.forEach(id => {
+    const btn = document.getElementById(id);
+    if (btn) {
+      btn.addEventListener('click', () => {
+        closeMobileMenu();
+        resetSurvey();
+        openModal(surveyModal);
+      });
+    }
+  });
+
+  // Close triggers
+  document.getElementById('survey-modal-close').addEventListener('click', () => closeModal(surveyModal));
+  document.getElementById('survey-success-close').addEventListener('click', () => closeModal(surveyModal));
+
+  function resetSurvey() {
+    currentStep = 1;
+    Object.keys(surveyData).forEach(k => delete surveyData[k]);
+
+    document.querySelectorAll('.wizard-step').forEach(step => {
+      step.style.display = 'none';
+    });
+    document.getElementById('wizard-step-1').style.display = 'block';
+    updateProgress();
+
+    // Reset forms
+    ['survey-step-1-form', 'survey-step-2-form', 'survey-step-3-form'].forEach(formId => {
+      const form = document.getElementById(formId);
+      if (form) {
+        form.reset();
+        clearErrors(form);
+      }
+    });
+
+    // Hide "other" textarea
+    document.getElementById('pain-other-text').style.display = 'none';
+  }
+
+  function updateProgress() {
+    const pct = (currentStep / 3) * 100;
+    progressBar.style.width = pct + '%';
+    stepLabel.textContent = `Step ${currentStep} of 3`;
+  }
+
+  function showStep(num) {
+    document.querySelectorAll('.wizard-step').forEach(step => {
+      step.style.display = 'none';
+    });
+    const target = document.getElementById(`wizard-step-${num}`);
+    if (target) {
+      target.style.display = 'block';
+      // Re-trigger animation
+      target.style.animation = 'none';
+      target.offsetHeight; // reflow
+      target.style.animation = '';
+    }
+    currentStep = num;
+    updateProgress();
+  }
+
+  // Step 1: "Other" toggle
+  const otherCheck = document.getElementById('pain-other-check');
+  const otherText = document.getElementById('pain-other-text');
+  otherCheck.addEventListener('change', () => {
+    otherText.style.display = otherCheck.checked ? 'block' : 'none';
+    if (otherCheck.checked) otherText.focus();
+  });
+
+  // Step 1 submit
+  document.getElementById('survey-step-1-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const checked = Array.from(
+      document.querySelectorAll('input[name="pain_points"]:checked')
+    ).map(cb => cb.value);
+
+    const errorEl = document.getElementById('survey-step-1-error');
+
+    if (checked.length === 0) {
+      errorEl.textContent = 'Please select at least one option.';
+      return;
+    }
+
+    errorEl.textContent = '';
+    surveyData.pain_points = checked;
+
+    if (checked.includes('other')) {
+      surveyData.pain_other_text = sanitize(otherText.value.trim());
+    }
+
+    showStep(2);
+  });
+
+  // Step 2 submit
+  document.getElementById('survey-step-2-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const feature = document.getElementById('survey-feature');
+    const errorEl = document.getElementById('survey-step-2-error');
+
+    if (!feature.value.trim()) {
+      errorEl.textContent = 'Please share your feature idea.';
+      feature.classList.add('input-error');
+      return;
+    }
+
+    errorEl.textContent = '';
+    feature.classList.remove('input-error');
+    surveyData.feature_wish = sanitize(feature.value.trim());
+
+    showStep(3);
+  });
+
+  // Step 2 back
+  document.getElementById('wizard-back-2').addEventListener('click', () => showStep(1));
+
+  // Step 3 submit
+  document.getElementById('survey-step-3-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    clearErrors(document.getElementById('survey-step-3-form'));
+
+    let valid = true;
+    const email = document.getElementById('survey-email');
+    const consent = document.getElementById('survey-consent');
+
+    if (!email.value.trim() || !isValidEmail(email.value.trim())) {
+      document.getElementById('survey-email-error').textContent = 'A valid email address is required.';
+      email.classList.add('input-error');
+      valid = false;
+    }
+
+    if (!consent.checked) {
+      document.getElementById('survey-consent-error').textContent = 'You must agree to the Privacy Policy.';
+      valid = false;
+    }
+
+    if (!valid) return;
+
+    surveyData.email = sanitize(email.value.trim());
+    surveyData.handle = sanitize(document.getElementById('survey-handle').value.trim());
+    surveyData.organization = sanitize(document.getElementById('survey-org').value.trim());
+    surveyData.consent = true;
+
+    StorageService.save('survey_responses', { ...surveyData });
+
+    // Show success
+    document.querySelectorAll('.wizard-step').forEach(step => {
+      step.style.display = 'none';
+    });
+    document.getElementById('wizard-success').style.display = 'flex';
+    progressBar.style.width = '100%';
+    stepLabel.textContent = 'Complete';
+  });
+
+  // Step 3 back
+  document.getElementById('wizard-back-3').addEventListener('click', () => showStep(2));
+
+  // ═════════════════════════════════════════════════
+  // SCROLL REVEAL (IntersectionObserver)
+  // ═════════════════════════════════════════════════
+
+  const revealElements = document.querySelectorAll('.eco-card, .infra-card');
+
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry, i) => {
+          if (entry.isIntersecting) {
+            // Stagger the reveal
+            setTimeout(() => {
+              entry.target.classList.add('revealed');
+            }, i * 80);
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }
+    );
+
+    revealElements.forEach(el => observer.observe(el));
+  } else {
+    // Fallback: just show everything
+    revealElements.forEach(el => el.classList.add('revealed'));
+  }
+
+  // ═════════════════════════════════════════════════
+  // INTERACTIVE DASHBOARD MOCK
+  // ═════════════════════════════════════════════════
+
+  // Simulate countdown timer
+  const mockTimeEl = document.getElementById('mock-time');
+  let mockSeconds = 24138; // ~6:42:18
+
+  function updateMockTime() {
+    if (mockSeconds <= 0) mockSeconds = 86400;
+    const h = Math.floor(mockSeconds / 3600);
+    const m = Math.floor((mockSeconds % 3600) / 60);
+    const s = mockSeconds % 60;
+    mockTimeEl.textContent =
+      String(h).padStart(2, '0') + ':' +
+      String(m).padStart(2, '0') + ':' +
+      String(s).padStart(2, '0');
+    mockSeconds--;
+  }
+
+  setInterval(updateMockTime, 1000);
+
+  // Simulate live feed updates
+  const feedItems = [
+    { dot: 'green', text: 'Team "QuantumLeap" linked GitHub repo', time: 'just now' },
+    { dot: 'blue', text: '2 new mentor sessions scheduled', time: 'just now' },
+    { dot: 'amber', text: 'Prize pool updated: +$500 AWS credits', time: 'just now' },
+    { dot: 'green', text: 'Team "HexaNode" submitted v2 demo', time: 'just now' },
+    { dot: 'blue', text: '5 builders matched via Smart Formation', time: 'just now' },
+    { dot: 'green', text: 'Workshop "Deploy to Edge" starts in 15m', time: 'just now' },
+    { dot: 'amber', text: 'Venue check-in: 84% attendance', time: 'just now' },
+  ];
+
+  let feedIndex = 0;
+  const feedContainer = document.querySelector('.mock-feed');
+  const teamsEl = document.getElementById('mock-teams');
+  const subsEl = document.getElementById('mock-subs');
+
+  function addFeedItem() {
+    const item = feedItems[feedIndex % feedItems.length];
+    feedIndex++;
+
+    const el = document.createElement('div');
+    el.className = 'mock-feed-item feed-new';
+    el.innerHTML = `
+      <span class="feed-dot feed-dot-${item.dot}"></span>
+      <span>${item.text}</span>
+      <span class="feed-time">${item.time}</span>
+    `;
+
+    // Insert after the title
+    const title = feedContainer.querySelector('.mock-feed-title');
+    if (title && title.nextSibling) {
+      feedContainer.insertBefore(el, title.nextSibling);
+    } else {
+      feedContainer.appendChild(el);
+    }
+
+    // Remove oldest if > 5 items (excluding title)
+    const allItems = feedContainer.querySelectorAll('.mock-feed-item');
+    if (allItems.length > 5) {
+      allItems[allItems.length - 1].remove();
+    }
+
+    // Bump stat counters randomly
+    const currentTeams = parseInt(teamsEl.textContent);
+    const currentSubs = parseInt(subsEl.textContent);
+    if (Math.random() > 0.5) teamsEl.textContent = currentTeams + 1;
+    if (Math.random() > 0.7) subsEl.textContent = currentSubs + 1;
+  }
+
+  setInterval(addFeedItem, 6000);
+
+  // ═════════════════════════════════════════════════
+  // SMOOTH SCROLL for anchor links
+  // ═════════════════════════════════════════════════
+
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', (e) => {
+      const target = document.querySelector(link.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+})();
+
+</script>
+
+</body>
+</html>
