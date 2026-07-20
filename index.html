@@ -794,7 +794,7 @@ transform:rotate(360deg);
   </div>
 
    <script>
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyrLFuTR8EyIoePGnAXzwq-o395LAEFQx7ftE49Fev3YyH8uuR5SQ18wMRmtsBV742TpQ/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby79VOdLncdjmPI0UtzoikEc_PBvEiqwKkjSqHiK8DEuAcPe2HEnMfaJPIu8IXXmzHWsg/exec";
 
 // ---------- Modal Controls ----------
 function openModal(id) {
@@ -838,12 +838,15 @@ async function sendData(data) {
 
   try {
 
+    const formData = new FormData();
+
+    Object.keys(data).forEach(key => {
+      formData.append(key, data[key]);
+    });
+
     const response = await fetch(SCRIPT_URL, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(data)
+      body: formData
     });
 
     return await response.json();
@@ -852,11 +855,10 @@ async function sendData(data) {
 
     console.error(err);
 
-    return {
-      success: false
-    };
+    return { success: false };
 
   }
+
 
 }
 
